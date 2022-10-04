@@ -25,7 +25,7 @@ module.exports = {
       comment: {
         type: Sequelize.STRING, allowNull: false
       },
-      userGiverId: {
+      userReviewerId: {
         type: Sequelize.INTEGER, allowNull: false,
         references: {
           model: "users",
@@ -34,7 +34,7 @@ module.exports = {
         onUpdate: "CASCADE",
         onDelete: "SET NULL"
       },
-      userReceiverId: {
+      userReviewedId: {
         type: Sequelize.INTEGER, allowNull: false,
         references: {
           model: "users",
