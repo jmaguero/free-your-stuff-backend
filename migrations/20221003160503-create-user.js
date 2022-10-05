@@ -33,12 +33,6 @@ module.exports = {
       isAdmin: {
         type: Sequelize.BOOLEAN, defaultValue: false
       },
-      reviews: {
-        type: Sequelize.FLOAT
-      },
-      chatId: {
-        type: Sequelize.INTEGER
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

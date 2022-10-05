@@ -20,16 +20,6 @@ module.exports = {
       imgUrl: {
         type: Sequelize.STRING
       },
-      productId: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
-        references: {
-          model: "products",
-          key: "id"
-        },
-        onUpdate: "CASCADE",
-        onDelete: "SET NULL"
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
