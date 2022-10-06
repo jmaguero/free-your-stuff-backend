@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       category.hasMany(models.product)
-      category.belongsToMany(models.product)
+      category.belongsToMany(models.product, { through: "productId" })
     }
   }
   category.init({

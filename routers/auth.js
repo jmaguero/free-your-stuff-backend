@@ -77,8 +77,29 @@ router.post("/signup", async (req, res) => {
 // - checking if a token is (still) valid
 router.get("/me", authMiddleware, async (req, res) => {
   // don't send back the password hash
+
   delete req.user.dataValues["password"];
   res.status(200).send({ ...req.user.dataValues });
+});
+
+router.patch("/me", authMiddleware, async (req, res) => {
+  try {
+    const { id } = req.user
+    const findUser = await User.findByPk(id)
+    const modifyUser = await findUser.update({ ...findUser, ...req.body })
+    if (modifyUser) {
+      delete modifyUser.dataValues["password"];
+      console.log(modifyUser)
+      res.status(200).send(modifyUser);
+    } else {
+      res.status(400).send({ message: "Sorry, we couldn't process your request" })
+    }
+  } catch (error) {
+    return res
+      .status(400)
+      .send({ message: "Something happened" });
+  }
+
 });
 
 module.exports = router;

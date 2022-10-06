@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       product.belongsTo(models.user)
       product.hasMany(models.category)
-      product.belongsToMany(models.category)
+      product.belongsToMany(models.category, { through: "categoryId" })
     }
   }
   product.init({
