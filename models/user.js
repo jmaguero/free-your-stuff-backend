@@ -18,14 +18,12 @@ module.exports = (sequelize, DataTypes) => {
   user.init({
     name: DataTypes.STRING,
     lastname: DataTypes.STRING,
-    email: { type: DataTypes.STRING, allowNull: false },
+    email: { type: DataTypes.STRING, allowNull: false, unique: true },
     password: { type: DataTypes.STRING, allowNull: false },
     giverRating: DataTypes.INTEGER,
     receiverRating: DataTypes.INTEGER,
     inBlocked: { type: DataTypes.BOOLEAN, defaultValue: false },
-    isAdmin: { type: DataTypes.BOOLEAN, defaultValue: false },
-    reviews: DataTypes.FLOAT,
-    chatId: DataTypes.INTEGER
+    isAdmin: { type: DataTypes.BOOLEAN, defaultValue: false }
   }, {
     sequelize,
     modelName: 'user',

@@ -23,7 +23,8 @@ module.exports = (sequelize, DataTypes) => {
     isAvailable: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: true },
     condition: { type: DataTypes.ENUM("good", "regular", "bad"), allowNull: false },
     lat: { type: DataTypes.FLOAT, allowNull: false },
-    long: { type: DataTypes.FLOAT, allowNull: false }
+    long: { type: DataTypes.FLOAT, allowNull: false },
+    categoryId: { type: DataTypes.INTEGER, allowNull: true }
   }, {
     sequelize,
     modelName: 'product',
