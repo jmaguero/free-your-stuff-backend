@@ -40,4 +40,18 @@ router.get("/:id", async (req, res, next) => {
 });
 
 
+router.post("/post", authMiddleware, async (req, res, next) => {
+  try {
+    const userId = req.user.id;
+    const { product } = req.body
+    const postProduct = await Product.create({ ...product, userId: userId })
+    res.status(200).send({ postProduct, message: "Product posted" })
+
+  } catch (error) {
+    return res.status(400).send({ message: "Something went wrong, sorry" });
+  }
+
+})
+
+
 module.exports = router;
