@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const authMiddleware = require("../auth/middleware");
 const Product = require("../models").product;
+const { Op } = require("sequelize")
 
 const router = new Router();
 
@@ -8,14 +9,36 @@ const router = new Router();
 //get all products 
 router.get("/", async (req, res, next) => {
   try {
+    const { term } = req.query
+    console.log(req.query)
 
-    const products = await Product.findAll();
-    if (!products) {
-      return res.status(404).send({
-        message: "No products found",
-      });
+    if (term) {
+      if (term.length > 0) {
+        const products = await Product.findAll({
+          where: {
+            [Op.or]: [
+              {
+                name:
+                  { [Op.substring]: term }
+              },
+              {
+                description:
+                  { [Op.substring]: term }
+              }
+            ]
+          }
+        });
+        return res.status(200).send(products);
+      }
+    } else {
+      const products = await Product.findAll();
+      if (!products) {
+        return res.status(404).send({
+          message: "No products found",
+        });
+      }
+      return res.status(200).send(products);
     }
-    return res.status(200).send(products);
   } catch (error) {
     console.log(error);
     return res.status(400).send({ message: "Something went wrong, sorry" });
