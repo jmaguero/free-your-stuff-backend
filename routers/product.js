@@ -24,13 +24,14 @@ router.get("/", async (req, res, next) => {
                 description:
                   { [Op.substring]: term }
               }
-            ]
+            ],
+            [Op.and]: [{ isAvailable: true }]
           }
         });
         return res.status(200).send(products);
       }
     } else {
-      const products = await Product.findAll();
+      const products = await Product.findAll({ where: { isAvailable: true } });
       if (!products) {
         return res.status(404).send({
           message: "No products found",
