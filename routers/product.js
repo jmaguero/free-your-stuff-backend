@@ -12,23 +12,24 @@ router.get("/", async (req, res, next) => {
     const { term } = req.query
     console.log(req.query)
 
-
     if (term) {
-      const products = await Product.findAll({
-        where: {
-          [Op.or]: [
-            {
-              name:
-                { [Op.substring]: term }
-            },
-            {
-              description:
-                { [Op.substring]: term }
-            }
-          ]
-        }
-      });
-      return res.status(200).send(products);
+      if (term.length > 0) {
+        const products = await Product.findAll({
+          where: {
+            [Op.or]: [
+              {
+                name:
+                  { [Op.substring]: term }
+              },
+              {
+                description:
+                  { [Op.substring]: term }
+              }
+            ]
+          }
+        });
+        return res.status(200).send(products);
+      }
     } else {
       const products = await Product.findAll();
       if (!products) {
