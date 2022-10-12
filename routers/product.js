@@ -18,17 +18,23 @@ router.get("/", async (req, res, next) => {
             [Op.or]: [
               {
                 name:
-                  { [Op.substring]: term }
+                  { [Op.iLike]: `%${term}%` }
               },
               {
                 description:
-                  { [Op.substring]: term }
+                  { [Op.iLike]: `%${term}%` }
               }
             ],
             [Op.and]: [{ isAvailable: true }]
           }
         });
-        return res.status(200).send(products);
+        if (!products[0].name) {
+          return res.status(400).send({
+            message: "No products found",
+          });
+        } else {
+          return res.status(200).send(products);
+        }
       }
     } else {
       const products = await Product.findAll({ where: { isAvailable: true } });
