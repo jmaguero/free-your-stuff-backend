@@ -10,17 +10,15 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      chat.hasOne(models.product, { foreignKey: "productId" })
       chat.hasMany(models.message)
       chat.belongsTo(models.user, { foreignKey: "user1" })
       chat.belongsTo(models.user, { foreignKey: "user2" })
-      chat.hasOne(models.product)
+      chat.belongsTo(models.product)
     }
   }
   chat.init({
     socketId: {
-      type: DataTypes.STRING,
-      allowNull: false
+      type: DataTypes.STRING
     }
   }, {
     sequelize,

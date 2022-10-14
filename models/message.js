@@ -10,10 +10,10 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      message.belongsTo(models.chat, { foreignKey: "chatId" })
+      message.belongsTo(models.chat)
       message.belongsTo(models.user, { foreignKey: "sender" })
       message.belongsTo(models.user, { foreignKey: "receiver" })
-      message.hasOne(models.user)
+      message.belongsTo(models.user)
     }
   }
   message.init({

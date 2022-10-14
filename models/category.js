@@ -10,8 +10,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      category.hasMany(models.product)
-      category.belongsToMany(models.product, { through: "productId" })
+      category.belongsToMany(models.product, { through: "product-category" })
     }
   }
   category.init({
@@ -21,10 +20,7 @@ module.exports = (sequelize, DataTypes) => {
     description: {
       allowNull: false, type: DataTypes.STRING
     },
-    imgUrl: DataTypes.STRING,
-    productId: {
-      allowNull: true, type: DataTypes.INTEGER
-    }
+    imgUrl: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'category',
