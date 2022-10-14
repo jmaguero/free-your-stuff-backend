@@ -6,6 +6,7 @@ const corsMiddleWare = require("cors");
 const authRouter = require("./routers/auth");
 const productRouter = require("./routers/product");
 const categoryRouter = require("./routers/category");
+const messageRouter = require("./routers/message");
 const { PORT } = require("./config/constants");
 
 
@@ -53,6 +54,7 @@ io.on("connection", (socket) => {
 app.use("/auth", authRouter);
 app.use("/products", productRouter);
 app.use("/categories", categoryRouter);
+app.use("/", messageRouter);
 //start listening
 
 server.listen(PORT, () => {

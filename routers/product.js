@@ -1,7 +1,6 @@
 const { Router } = require("express");
 const authMiddleware = require("../auth/middleware");
 const Product = require("../models").product;
-const Chat = require("../models").chat;
 const { Op } = require("sequelize")
 
 const router = new Router();
@@ -38,7 +37,7 @@ router.get("/", async (req, res, next) => {
         }
       }
     } else {
-      const products = await Product.findAll({ where: { isAvailable: true }, include: [Chat] });
+      const products = await Product.findAll({ where: { isAvailable: true } });
       if (!products) {
         return res.status(404).send({
           message: "No products found",
