@@ -30,7 +30,6 @@ module.exports = {
       onUpdate: "CASCADE",
       onDelete: "SET NULL",
     });
-
     await queryInterface.addColumn("messages", "chatId", {
       type: Sequelize.INTEGER,
       references: {
@@ -40,7 +39,6 @@ module.exports = {
       onUpdate: "CASCADE",
       onDelete: "SET NULL",
     });
-
     await queryInterface.addColumn("messages", "sender", {
       type: Sequelize.INTEGER,
       references: {
