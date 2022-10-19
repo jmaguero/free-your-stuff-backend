@@ -13,6 +13,9 @@ module.exports = (sequelize, DataTypes) => {
       user.hasMany(models.product);
       user.hasMany(models.review, { foreignKey: "userGiverId" });
       user.hasMany(models.review, { foreignKey: "userReceiverId" });
+      user.hasMany(models.chat, { foreignKey: "user1" })
+      user.hasMany(models.chat, { foreignKey: "user2" })
+      user.hasMany(models.message, { foreignKey: "sender" })
     }
   }
   user.init({

@@ -11,8 +11,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       product.belongsTo(models.user)
-      product.hasMany(models.category)
-      product.belongsToMany(models.category, { through: "categoryId" })
+      product.belongsToMany(models.category, { through: "product-category" })
+      product.hasMany(models.chat)
     }
   }
   product.init({
@@ -23,8 +23,7 @@ module.exports = (sequelize, DataTypes) => {
     isAvailable: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: true },
     condition: { type: DataTypes.ENUM("good", "regular", "bad"), allowNull: false },
     lat: { type: DataTypes.FLOAT, allowNull: false },
-    long: { type: DataTypes.FLOAT, allowNull: false },
-    categoryId: { type: DataTypes.INTEGER, allowNull: true }
+    long: { type: DataTypes.FLOAT, allowNull: false }
   }, {
     sequelize,
     modelName: 'product',
