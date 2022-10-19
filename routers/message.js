@@ -8,7 +8,7 @@ const { Op } = require("sequelize")
 
 const router = new Router();
 
-//TODO include the other user
+//TODO REMOVE PASSWORD AND SENSITIVE DATA.
 
 //get user's messages
 router.get("/me/messages", authMiddleware, async (req, res, next) => {
@@ -26,7 +26,7 @@ router.get("/me/messages", authMiddleware, async (req, res, next) => {
           }
         ],
       },
-      include: [Product, Message, User]
+      include: [Product, { model: Message, include: { model: User, attributes: { exclude: ["id", "email", "password", "giverRating", "receiverRating", "inBlocked", "isAdmin", "createdAt", "updatedAt"] } } }, { model: User, attributes: { exclude: ["id", "email", "password", "giverRating", "receiverRating", "inBlocked", "isAdmin", "createdAt", "updatedAt"] } }]
     });
     if (id) {
       if (!getUserMessages) {
@@ -47,6 +47,30 @@ router.get("/me/messages", async (req, res, next) => {
     const getUserMessages = await Message.findAll();
     console.log(getUserMessages)
     return res.status(200).send(getUserMessages);
+  } catch (error) {
+    console.log(error);
+    return res.status(400).send({ message: "Something went wrong, sorry" });
+  }
+});
+
+//post a message
+router.post("/me/messages", authMiddleware, async (req, res, next) => {
+  try {
+    const { id } = req.user
+    const { chatId, message } = req.body
+    const createMessage = await Message.create({
+      chatId: chatId,
+      sender: id,
+      message: message
+    });
+
+    if (!createMessage) {
+      return res.status(404).send({
+        message: "No possible to create message",
+      });
+    } else {
+      return res.status(200).send({ message: "Message created", newMessage: createMessage });
+    }
   } catch (error) {
     console.log(error);
     return res.status(400).send({ message: "Something went wrong, sorry" });
